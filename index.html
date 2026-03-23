@@ -1,0 +1,52 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Prep Plan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+    <h1>Wochen-Ernährungsplan</h1>
+    <p class="hint">Interaktiv im Browser: CSV laden, bearbeiten, exportieren. Mike und Ana sind getrennt planbar.</p>
+
+    <div class="topbar">
+      <button id="load-csv-btn" class="btn" type="button">CSV laden</button>
+      <button id="export-csv-btn" class="btn" type="button">Plan exportieren</button>
+      <input id="csv-input" type="file" accept=".csv,text/csv" hidden>
+    </div>
+
+    <div class="people-grid">
+      <section class="person-card">
+        <div class="person-head">
+          <h2 class="person-title">Mike</h2>
+          <button class="btn" type="button" data-add-person="Mike">Zeile hinzufügen</button>
+        </div>
+        <div id="mike-plan" class="plan-stack"></div>
+      </section>
+
+      <section class="person-card">
+        <div class="person-head">
+          <h2 class="person-title">Ana</h2>
+          <button class="btn" type="button" data-add-person="Ana">Zeile hinzufügen</button>
+        </div>
+        <div id="ana-plan" class="plan-stack"></div>
+      </section>
+    </div>
+
+    <details class="shopping-details">
+      <summary class="shopping-summary">Wocheneinkauf</summary>
+      <div class="shopping-content">
+        <div class="shopping-controls">
+          <button type="button" class="btn filter-btn active" data-mode="both">Beide</button>
+          <button type="button" class="btn filter-btn" data-mode="mike">Nur Mike</button>
+          <button type="button" class="btn filter-btn" data-mode="ana">Nur Ana</button>
+        </div>
+        <div id="shopping-list"></div>
+      </div>
+    </details>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
