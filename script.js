@@ -166,12 +166,12 @@
               const body = items
                 .map((item) => {
                   return `<tr>
-                    <td style="width: 33%;"><input class="cell-input" data-id="${item.id}" data-field="food" value="${escapeHtml(item.food)}"></td>
-                    <td style="width: 14%;"><input class="cell-input cell-num" data-id="${item.id}" data-field="amount" type="number" step="0.1" min="0" value="${toNumber(item.amount)}"></td>
-                    <td style="width: 12%;">${getUnit(item.food)}</td>
-                    <td style="width: 18%;"><select class="cell-select" data-id="${item.id}" data-field="day">${optionList(dayOrder, item.day, dayLabel)}</select></td>
-                    <td style="width: 18%;"><select class="cell-select" data-id="${item.id}" data-field="meal">${optionList(mealOrder, item.meal, mealLabel)}</select></td>
-                    <td style="width: 5%;"><button class="mini-btn" type="button" data-delete-id="${item.id}">x</button></td>
+                    <td class="meal-cell meal-cell-food" data-label="Food"><input class="cell-input" data-id="${item.id}" data-field="food" value="${escapeHtml(item.food)}"></td>
+                    <td class="meal-cell meal-cell-amount" data-label="Menge"><input class="cell-input cell-num" data-id="${item.id}" data-field="amount" type="number" step="0.1" min="0" value="${toNumber(item.amount)}"></td>
+                    <td class="meal-cell meal-cell-unit" data-label="Einheit">${getUnit(item.food)}</td>
+                    <td class="meal-cell meal-cell-day" data-label="Tag"><select class="cell-select" data-id="${item.id}" data-field="day">${optionList(dayOrder, item.day, dayLabel)}</select></td>
+                    <td class="meal-cell meal-cell-meal" data-label="Meal"><select class="cell-select" data-id="${item.id}" data-field="meal">${optionList(mealOrder, item.meal, mealLabel)}</select></td>
+                    <td class="meal-cell meal-cell-action" data-label="Aktion"><button class="mini-btn" type="button" data-delete-id="${item.id}">Löschen</button></td>
                   </tr>`;
                 })
                 .join("");
@@ -179,7 +179,7 @@
               return `<div class="meal">
                 <span class="meal-name">${mealLabel[meal] || meal}</span>
                 <table class="meal-table">
-                  <thead><tr><th>Food</th><th>Menge</th><th>Unit</th><th>Tag</th><th>Meal</th><th></th></tr></thead>
+                  <thead><tr><th>Food</th><th>Menge</th><th>Einheit</th><th>Tag</th><th>Meal</th><th>Aktion</th></tr></thead>
                   <tbody>${body}</tbody>
                 </table>
               </div>`;
@@ -219,11 +219,11 @@
       const showTotal = mode === "both";
 
       const head = [
-        "<th style=\"width:36%;\">Lebensmittel</th>",
-        showMike ? "<th style=\"width:18%;\">Mike</th>" : "",
-        showAna ? "<th style=\"width:18%;\">Ana</th>" : "",
-        showTotal ? "<th style=\"width:18%;\">Gesamt</th>" : "",
-        "<th style=\"width:10%;\">Einheit</th>"
+        "<th>Lebensmittel</th>",
+        showMike ? "<th>Mike</th>" : "",
+        showAna ? "<th>Ana</th>" : "",
+        showTotal ? "<th>Gesamt</th>" : "",
+        "<th>Einheit</th>"
       ].join("");
 
       const body = list
@@ -239,7 +239,7 @@
         })
         .join("");
 
-      target.innerHTML = `<table class="shopping-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+      target.innerHTML = `<div class="shopping-table-wrap"><table class="shopping-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
     }
 
     function parseCsv(text) {

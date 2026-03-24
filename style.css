@@ -148,6 +148,11 @@
       font-size: 0.88rem;
     }
 
+    .shopping-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .meal-table th,
     .meal-table td,
     .shopping-table th,
@@ -253,9 +258,105 @@
         padding: 12px;
       }
 
-      .meal-table,
+      .people-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar .btn {
+        flex: 1 1 calc(50% - 8px);
+        min-height: 42px;
+      }
+
+      .person-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .person-head .btn {
+        width: 100%;
+      }
+
+      .day-summary {
+        padding: 12px 12px;
+      }
+
+      .meal-table {
+        font-size: 0.84rem;
+        table-layout: auto;
+      }
+
+      .meal-table thead {
+        display: none;
+      }
+
+      .meal-table tbody,
+      .meal-table tr,
+      .meal-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .meal-table tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 10px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #f8fafc;
+        padding: 8px;
+        margin-bottom: 8px;
+      }
+
+      .meal-table td {
+        border-bottom: 0;
+        padding: 0;
+      }
+
+      .meal-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: var(--muted);
+        margin-bottom: 3px;
+      }
+
+      .meal-cell-food,
+      .meal-cell-day,
+      .meal-cell-meal,
+      .meal-cell-action {
+        grid-column: 1 / -1;
+      }
+
+      .meal-cell-food .cell-input {
+        font-size: 0.93rem;
+        font-weight: 600;
+      }
+
+      .meal-cell-action {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .meal-cell-action::before {
+        display: none;
+      }
+
+      .mini-btn {
+        padding: 8px 10px;
+        font-size: 0.82rem;
+      }
+
+      .cell-input,
+      .cell-select {
+        min-height: 38px;
+      }
+
       .shopping-table {
         font-size: 0.84rem;
+        min-width: 520px;
       }
     }
 
