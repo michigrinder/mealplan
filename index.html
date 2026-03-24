@@ -17,8 +17,14 @@
       <input id="csv-input" type="file" accept=".csv,text/csv" hidden>
     </div>
 
+    <div id="mobile-person-switch" class="mobile-person-switch">
+      <button type="button" class="btn person-switch-btn active" data-person-view="Mike">Mike</button>
+      <button type="button" class="btn person-switch-btn" data-person-view="Ana">Ana</button>
+      <button type="button" class="btn person-switch-btn" data-person-view="both">Beide</button>
+    </div>
+
     <div class="people-grid">
-      <section class="person-card">
+      <section class="person-card" data-person-card="Mike">
         <div class="person-head">
           <h2 class="person-title">Mike</h2>
           <button class="btn" type="button" data-add-person="Mike">Zeile hinzufügen</button>
@@ -26,7 +32,7 @@
         <div id="mike-plan" class="plan-stack"></div>
       </section>
 
-      <section class="person-card">
+      <section class="person-card" data-person-card="Ana">
         <div class="person-head">
           <h2 class="person-title">Ana</h2>
           <button class="btn" type="button" data-add-person="Ana">Zeile hinzufügen</button>

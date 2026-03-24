@@ -8,18 +8,21 @@ Funktioniert lokal (auch auf dem iPhone) und kann über GitHub Pages geteilt wer
 - `style.css`: Styling.
 - `script.js`: komplette App-Logik.
 - `meal_plan_structured.csv`: Datenquelle zum Laden/Ersetzen.
-- `AGENTS.md`: Contributor-Hinweise.
+- `LEGACY/meal_plan.html`: alte Standalone-Version (nur als Backup).
 
 ## Funktionen
 - Getrennte Planung für **Mike** und **Ana**
 - Zeilen hinzufügen, bearbeiten, verschieben (Tag/Meal), löschen
+- Aktueller Wochentag ist beim Laden automatisch geöffnet
+- Mobile-Ansicht mit schnellem Umschalter: `Mike`, `Ana`, `Beide`
 - CSV laden (`CSV laden`)
 - CSV exportieren (`Plan exportieren`)
 - Aufklappbare Einkaufsliste mit Filtern (`Beide`, `Nur Mike`, `Nur Ana`)
+- Bei Filter `Beide`: nur `Gesamt` + `Einheit` (ohne separate Mike/Ana-Spalten)
 
 ## Nutzung lokal
 1. `index.html` im Browser öffnen.
-2. Optional iPhone: Datei in der Dateien-App öffnen.
+2. Optional iPhone: Datei in der Dateien-App oder über GitHub Pages öffnen.
 
 ## CSV-Formate (Import)
 1. Kombiniert: `Day,Meal,Food,Mike_amount,Ana_amount`

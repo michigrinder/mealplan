@@ -96,11 +96,16 @@
     };
 
     const getUnit = (food) => unitByFood[food] || "g";
+    const getTodayDayKey = () => dayOrder[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1] || "Monday";
 
     let idCounter = 1;
     let activeShoppingMode = "both";
     let entries = createEntriesFromCombined(baseRows);
     const openDayState = { Mike: new Set(), Ana: new Set() };
+    const initialDay = getTodayDayKey();
+    openDayState.Mike.add(initialDay);
+    openDayState.Ana.add(initialDay);
+    let currentMobilePersonView = "Mike";
 
     function nextId() {
       const id = `e-${idCounter}`;
@@ -132,6 +137,27 @@
         .join("");
     }
 
+    function isMobileViewport() {
+      return window.matchMedia("(max-width: 700px)").matches;
+    }
+
+    function applyMobilePersonView() {
+      const cards = document.querySelectorAll("[data-person-card]");
+      const buttons = document.querySelectorAll(".person-switch-btn");
+      const mobile = isMobileViewport();
+
+      buttons.forEach((btn) => {
+        const mode = btn.getAttribute("data-person-view");
+        btn.classList.toggle("active", mode === currentMobilePersonView);
+      });
+
+      cards.forEach((card) => {
+        const person = card.getAttribute("data-person-card");
+        const hide = mobile && currentMobilePersonView !== "both" && person !== currentMobilePersonView;
+        card.classList.toggle("is-hidden-mobile", hide);
+      });
+    }
+
     function captureOpenState() {
       [
         { person: "Mike", id: "mike-plan" },
@@ -139,8 +165,10 @@
       ].forEach(({ person, id }) => {
         const host = document.getElementById(id);
         if (!host) return;
+        const detailsList = host.querySelectorAll(".day-details");
+        if (detailsList.length === 0) return;
         openDayState[person].clear();
-        host.querySelectorAll(".day-details").forEach((details) => {
+        detailsList.forEach((details) => {
           const day = details.getAttribute("data-day");
           if (details.open && day) openDayState[person].add(day);
         });
@@ -171,15 +199,15 @@
                     <td class="meal-cell meal-cell-unit" data-label="Einheit">${getUnit(item.food)}</td>
                     <td class="meal-cell meal-cell-day" data-label="Tag"><select class="cell-select" data-id="${item.id}" data-field="day">${optionList(dayOrder, item.day, dayLabel)}</select></td>
                     <td class="meal-cell meal-cell-meal" data-label="Meal"><select class="cell-select" data-id="${item.id}" data-field="meal">${optionList(mealOrder, item.meal, mealLabel)}</select></td>
-                    <td class="meal-cell meal-cell-action" data-label="Aktion"><button class="mini-btn" type="button" data-delete-id="${item.id}">Löschen</button></td>
+                    <td class="meal-cell meal-cell-action" data-label=""><button class="mini-btn mini-btn-icon" type="button" data-delete-id="${item.id}" title="Eintrag löschen" aria-label="Eintrag löschen">×</button></td>
                   </tr>`;
                 })
                 .join("");
 
-              return `<div class="meal">
+              return `<div class="meal meal-${meal.toLowerCase()}">
                 <span class="meal-name">${mealLabel[meal] || meal}</span>
                 <table class="meal-table">
-                  <thead><tr><th>Food</th><th>Menge</th><th>Einheit</th><th>Tag</th><th>Meal</th><th>Aktion</th></tr></thead>
+                  <thead><tr><th>Food</th><th>Menge</th><th>Einheit</th><th>Tag</th><th>Meal</th><th></th></tr></thead>
                   <tbody>${body}</tbody>
                 </table>
               </div>`;
@@ -214,8 +242,8 @@
         });
 
       const list = Object.values(bucket).sort((a, b) => a.food.localeCompare(b.food, "de"));
-      const showMike = mode === "both" || mode === "mike";
-      const showAna = mode === "both" || mode === "ana";
+      const showMike = mode === "mike";
+      const showAna = mode === "ana";
       const showTotal = mode === "both";
 
       const head = [
@@ -436,6 +464,18 @@
           renderShoppingTable(activeShoppingMode);
         });
       });
+
+      const personSwitchButtons = document.querySelectorAll(".person-switch-btn");
+      personSwitchButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          currentMobilePersonView = btn.getAttribute("data-person-view") || "Mike";
+          applyMobilePersonView();
+        });
+      });
+
+      currentMobilePersonView = isMobileViewport() ? "Mike" : "both";
+      applyMobilePersonView();
+      window.addEventListener("resize", applyMobilePersonView);
     }
 
     function handlePlanFieldUpdate(event) {
