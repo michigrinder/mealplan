@@ -1,3 +1,2 @@
-Tasks.md
-AGENTS.md
-AGENTS.md
+*.md
+!README.md
